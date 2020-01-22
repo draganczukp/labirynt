@@ -5,26 +5,46 @@ using UnityEngine;
 public class ElevatorController : MonoBehaviour
 {
 
-	enum Going { UP, DOWN };
+	public enum Going { UP, DOWN };
 
-	public Vector3 bottom;
-	public Vector3 top;
+	public Transform bottom;
+	public Transform top;
 
+	public float speed = 3f;
 
-	private Going going = Going.UP;
-	private float progress = 0;
+	private Going going = Going.DOWN;
+	private float progress = 0f;
 
-    void FixedUpdate()
-    {
-        
-    }
+	void FixedUpdate()
+	{
+		if(progress <= 1)
+		{
+			progress += speed * Time.deltaTime;
+
+			if(going == Going.DOWN)
+			{
+				transform.position = Vector3.Lerp(top.position, bottom.position, progress);
+			} else {
+				transform.position = Vector3.Lerp(bottom.position, top.position, progress);
+			}
+		}
+	}
 
 	public void CallElevator(Going going){
 		if(going == Going.DOWN)
 		{
 			if(progress == 1)
 			{
-
+				going = Going.UP;
+				progress = 0;
+			}
+		}
+		else if(going == Going.UP)
+		{
+			if(progress == 1)
+			{
+				going = Going.DOWN;
+				progress = 0;
 			}
 		}
 	}

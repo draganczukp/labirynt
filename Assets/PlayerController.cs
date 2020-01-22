@@ -151,6 +151,15 @@ public class PlayerController : MonoBehaviour
 			Application.Quit();
 			#endif
 		}
+
+		if(Physics.Raycast(playerView.position, playerView.eulerAngles, out RaycastHit hit))
+		{
+			GameObject hitObject = hit.collider.gameObject;
+			print(hit.distance);
+			if(hitObject.TryGetComponent<ElevatorButton>(out ElevatorButton button)){
+				button.OnRayHit();
+			}
+		}
 	}
 
 	/*******************************************************************************************************\
