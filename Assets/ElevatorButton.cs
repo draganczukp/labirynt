@@ -11,19 +11,29 @@ public class ElevatorButton : MonoBehaviour
 
     private bool rayHit = false;
 
+    private Renderer renderer;
+
+
     void Start()
     {
-        
+        renderer = GetComponent<Renderer>();
+        renderer.material.color = Color.blue;
     }
 
-    // Update is called once per frame
+    void OnMouseEnter()
+    {
+        renderer.material.color = Color.red;
+    }
+
+    void OnMouseExit()
+    {
+        renderer.material.color = Color.blue;
+    }
+
     void FixedUpdate()
     {
-        Renderer renderer = GetComponent<Renderer>();
         if(rayHit)
         {
-            renderer.material.SetColor("_Color", Color.red);
-
             if (Input.GetMouseButtonDown(0))
             {
                 Elevator.CallElevator(dir);
@@ -34,7 +44,6 @@ public class ElevatorButton : MonoBehaviour
 
         }else
         {
-            renderer.material.SetColor("_Color", Color.blue);
         }
 
         rayHit = false;
